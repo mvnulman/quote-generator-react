@@ -1,9 +1,10 @@
 import './App.css';
+import Quotes from './components/Quotes';
 
 function App() {
   return (
-    <div className="App">
-      Testing 1, 2, 3...
+    <div>
+      <Quotes />
     </div>
   );
 }
