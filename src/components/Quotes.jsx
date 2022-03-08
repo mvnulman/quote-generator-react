@@ -6,10 +6,11 @@ const Quotes = () => {
       <div className="container-quote">
         <h1>Quote of the Day</h1>
         <blockquote>
-           <span>"</span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-          tempore non cum ipsa delectus, est assumenda quaerat quisquam
-          necessitatibus aperiam, enim eum vel aut illo reprehenderit. Omnis
-          culpa provident consectetur<span>"</span>.
+          <span>“</span>Lorem, ipsum dolor sit amet consectetur adipisicing
+          Omnis culpa provident consectetur.<span>”</span>
+          <p className="author"> - Author</p>
+          {/* <hr /> */}
+          <button>New Quote</button>
         </blockquote>
       </div>
     </div>
