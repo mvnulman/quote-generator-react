@@ -36,7 +36,9 @@ const Quotes = () => {
           <span>“</span>
           {quote}
           <span>”</span>
-          <p className="author"> - {author}</p>
+          <p className="author">
+            - {author}
+          </p>
           <button onClick={handleFetch}>New Quote</button>
         </blockquote>
       </div>
