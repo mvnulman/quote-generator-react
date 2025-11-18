@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Quotes = () => {
@@ -6,7 +6,7 @@ const Quotes = () => {
   const [author, setAuthor] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(true);
     axios
       .get("https://api.quotable.io/random")
