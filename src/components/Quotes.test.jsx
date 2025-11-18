@@ -3,7 +3,6 @@ import { vi, describe, test, beforeEach, expect } from "vitest";
 import axios from "axios";
 import Quotes from "./Quotes.jsx";
 
-// Mock axios
 vi.mock("axios");
 const mockedAxios = vi.mocked(axios);
 
@@ -13,7 +12,6 @@ describe("Quotes", () => {
   });
 
   test("shows loading initially", async () => {
-    // Mock the API call
     mockedAxios.get.mockResolvedValueOnce({
       data: {
         content: "Test quote",
@@ -23,10 +21,8 @@ describe("Quotes", () => {
 
     const { container } = render(<Quotes />);
 
-    // Should show loading initially
     expect(container.querySelector(".loader")).toBeInTheDocument();
 
-    // Wait for the quote to load
     await waitFor(() => {
       expect(screen.getByText("Test quote")).toBeInTheDocument();
     });
@@ -35,7 +31,6 @@ describe("Quotes", () => {
   });
 
   test("fetches new quote on button click", async () => {
-    // Initial load
     mockedAxios.get.mockResolvedValueOnce({
       data: {
         content: "Initial quote",
@@ -49,7 +44,6 @@ describe("Quotes", () => {
       expect(screen.getByText("Initial quote")).toBeInTheDocument();
     });
 
-    // Mock new quote
     mockedAxios.get.mockResolvedValueOnce({
       data: {
         content: "New quote",
@@ -60,12 +54,10 @@ describe("Quotes", () => {
     const button = screen.getByRole("button", { name: /new quote/i });
     fireEvent.click(button);
 
-    // Should show loading again
     await waitFor(() => {
       expect(container.querySelector(".loader")).toBeInTheDocument();
     });
 
-    // Wait for new quote
     await waitFor(() => {
       expect(screen.getByText("New quote")).toBeInTheDocument();
     });
@@ -78,12 +70,8 @@ describe("Quotes", () => {
 
     render(<Quotes />);
 
-    // Should show loading, then stop loading on error
     await waitFor(() => {
       expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
     });
-
-    // On error, since quote is empty, the blockquote is rendered but empty
-    // Perhaps the test is fine, or adjust component to show error
   });
 });
