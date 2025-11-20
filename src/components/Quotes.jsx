@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Quotes = () => {
-  const [quote, setQuote] = useState([]);
-  const [author, setAuthor] = useState([]);
+  const [quote, setQuote] = useState("");
+  const [author, setAuthor] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://api.quotable.io/random")
+      .get("/api/random")
       .then((res) => {
         setQuote(res.data.content);
         setAuthor(res.data.author);
@@ -24,11 +24,10 @@ const Quotes = () => {
   const onChangeFetch = async () => {
     setLoading(true);
     try {
-      await axios.get("https://api.quotable.io/random").then((res) => {
-        setQuote(res.data.content);
-        setAuthor(res.data.author);
-        setLoading(false);
-      });
+      const res = await axios.get("/api/random");
+      setQuote(res.data.content);
+      setAuthor(res.data.author);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
