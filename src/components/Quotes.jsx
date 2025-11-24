@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import quotes from "../quotes.js";
 
 const Quotes = () => {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
+  const [avatarImage, setAvatarImage] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const getRandomQuote = () => {
+    setLoading(true);
+    setTimeout(() => {
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      setQuote(randomQuote.content);
+      setAuthor(randomQuote.author);
+      setAvatarImage(randomQuote.avatar);
+      setLoading(false);
+    }, 500);
+  };
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get("/api/random")
-      .then((res) => {
-        setQuote(res.data.content);
-        setAuthor(res.data.author);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    getRandomQuote();
   }, []);
 
-  const onChangeFetch = async () => {
+  const onChangeFetch = () => {
     setLoading(true);
-    try {
-      const res = await axios.get("/api/random");
-      setQuote(res.data.content);
-      setAuthor(res.data.author);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
+    getRandomQuote();
   };
 
   return (
@@ -42,10 +36,25 @@ const Quotes = () => {
           <div className="loader"></div>
         ) : (
           <blockquote>
-            <span>“</span>
+            <span>"</span>
             {quote}
-            <span>”</span>
+            <span>"</span>
             <p className="author">- {author}</p>
+            <img
+              src={avatarImage}
+              alt={`${author} avatar`}
+              onError={(e) => {
+                e.target.src = "https://robohash.org/mail@ashallendesign.co.uk";
+              }}
+              style={{
+                width: "64px",
+                height: "64px",
+                borderRadius: "50%",
+                display: "block",
+                margin: "10px auto",
+                border: "2px solid #ccc",
+              }}
+            />
             <button onClick={onChangeFetch}>New Quote</button>
           </blockquote>
         )}
